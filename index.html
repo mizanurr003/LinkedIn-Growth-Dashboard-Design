@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://static.readdy.ai/static/e.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Growth Dashboard</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0A66C2',
+                        secondary: '#16A34A'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-white min-h-screen">
+
+    <header class="w-full h-16 border-b flex items-center px-6 bg-white">
+        <div class="flex-1 flex items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 flex items-center justify-center text-primary">
+                    <i class="ri-linkedin-box-fill ri-lg"></i>
+                </div>
+                <span class="font-medium text-gray-800">Growth Dashboard</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="text-sm text-gray-600">September 10, 2025</div>
+            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                <i class="ri-user-3-line text-gray-600"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1440px] mx-auto p-6 space-y-6">
+        <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-4 bg-white rounded p-6 border">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg font-medium">This Week's Performance</h2>
+                    <div class="flex items-center gap-2">
+                        <button class="px-3 py-1.5 text-sm border rounded-button hover:bg-gray-50">Last 7 days</button>
+                        <button class="px-3 py-1.5 text-sm border rounded-button hover:bg-gray-50">Last 30 days</button>
+                        <button class="px-3 py-1.5 text-sm border rounded-button hover:bg-gray-50">Last 90 days</button>
+                    </div>
+                </div>
+                <div id="mainChart" class="w-full h-[300px]"></div>
+            </div>
+
+            <div class="col-span-2 bg-white rounded p-6 border">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-medium">Engagement Overview</h3>
+                    <div class="text-sm text-gray-500">vs last period</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Comments Posted</div>
+                        <div class="text-2xl font-medium">247</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>12.5%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Comment Impressions</div>
+                        <div class="text-2xl font-medium">24.8K</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>18.2%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Profile Views</div>
+                        <div class="text-2xl font-medium">1,893</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>8.7%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Post Impressions</div>
+                        <div class="text-2xl font-medium">45.2K</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>15.3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-2 bg-white rounded p-6 border">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-medium">Conversion Metrics</h3>
+                    <div class="text-sm text-gray-500">vs last period</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Connection Requests</div>
+                        <div class="text-2xl font-medium">156</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>9.8%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Booked Calls</div>
+                        <div class="text-2xl font-medium">28</div>
+                        <div class="flex items-center gap-1 text-sm text-red-600 mt-1">
+                            <i class="ri-arrow-down-line"></i>
+                            <span>4.2%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Closed Deals</div>
+                        <div class="text-2xl font-medium">12</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>20%</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded bg-gray-50">
+                        <div class="text-sm text-gray-600 mb-1">Revenue</div>
+                        <div class="text-2xl font-medium">$24.5K</div>
+                        <div class="flex items-center gap-1 text-sm text-green-600 mt-1">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>25.8%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-4 bg-white rounded p-6 border">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-medium">Recent Activity</h3>
+                    <button class="px-3 py-1.5 text-sm text-primary hover:bg-blue-50 rounded-button">View All</button>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 p-3 rounded hover:bg-gray-50">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-primary">
+                            <i class="ri-message-3-line"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm">Commented on "The Future of AI in Business"</div>
+                            <div class="text-sm text-gray-500">2 hours ago · 156 impressions</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="text-sm text-gray-600">12 replies</div>
+                            <div class="text-sm text-gray-600">24 likes</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 rounded hover:bg-gray-50">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                            <i class="ri-calendar-check-line"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm">New call booked with Sarah Johnson</div>
+                            <div class="text-sm text-gray-500">4 hours ago · Strategy Session</div>
+                        </div>
+                        <div class="text-sm text-gray-600">Tomorrow, 2:00 PM</div>
+                    </div>
+                    <div class="flex items-center gap-4 p-3 rounded hover:bg-gray-50">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                            <i class="ri-user-add-line"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm">5 new connection requests</div>
+                            <div class="text-sm text-gray-500">6 hours ago</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1.5 text-sm bg-primary text-white rounded-button">Accept All</button>
+                            <button class="px-3 py-1.5 text-sm border rounded-button">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script id="chartInit">
+        document.addEventListener('DOMContentLoaded', function() {
+            const chart = echarts.init(document.getElementById('mainChart'));
+
+            const option = {
+                animation: false,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    },
+                    borderWidth: 1
+                },
+                grid: {
+                    top: 10,
+                    right: 10,
+                    bottom: 20,
+                    left: 60,
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#f3f4f6'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    }
+                },
+                series: [{
+                        name: 'Comments',
+                        type: 'line',
+                        smooth: true,
+                        data: [35, 42, 48, 40, 52, 45, 38],
+                        lineStyle: {
+                            width: 3
+                        },
+                        itemStyle: {
+                            color: 'rgba(87, 181, 231, 1)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(87, 181, 231, 0.2)'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'rgba(87, 181, 231, 0)'
+                                }
+                            ])
+                        },
+                        showSymbol: false
+                    },
+                    {
+                        name: 'Profile Views',
+                        type: 'line',
+                        smooth: true,
+                        data: [150, 180, 220, 205, 260, 230, 200],
+                        lineStyle: {
+                            width: 3
+                        },
+                        itemStyle: {
+                            color: 'rgba(141, 211, 199, 1)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(141, 211, 199, 0.2)'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'rgba(141, 211, 199, 0)'
+                                }
+                            ])
+                        },
+                        showSymbol: false
+                    }
+                ]
+            };
+
+            chart.setOption(option);
+
+            window.addEventListener('resize', function() {
+                chart.resize();
+            });
+        });
+    </script>
+</body>
+
+</html>
